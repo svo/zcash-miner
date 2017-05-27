@@ -1,0 +1,50 @@
+
+    - name: Install aptitude
+      apt: pkg=aptitude update_cache=yes
+      become: yes
+
+    - name: Apt update/upgrade
+      apt: upgrade=yes update_cache=yes
+      become: yes
+
+    - name: Install tmux terminal multiplexer
+      apt: pkg=tmux
+      become: yes
+
+    - name: Install required packages
+      apt: pkg={{ item }}
+      become: yes
+      with_items:
+      - python3
+      - build-essential
+      - opencl-headers
+
+    - name: Download CUDA repository .deb
+      get_url: url=http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/cuda-repo-ubuntu1604_8.0.61-1_amd64.deb dest=/tmp/cuda-repo-ubuntu1604_8.0.61-1_amd64.deb
+      register: get_deb_result
+      until: get_deb_result | succeeded
+      retries: 3
+      delay: 1
+
+    - name: Install CUDA repository
+      apt: deb=/tmp/cuda-repo-ubuntu1604_8.0.61-1_amd64.deb
+      become: yes
+
+    - name: Install CUDA
+      apt: pkg=cuda update_cache=yes
+      become: yes
+
+    - name: Get silentarmy
+      git: repo=https://github.com/mbevand/silentarmy.git dest=~/silentarmy force=yes
+
+    - name: Update silentarmy config
+      lineinfile: dest=~/silentarmy/Makefile regexp='{{ item.regexp }}' line='{{ item.line }}'
+      with_items:
+      - {regexp: '^OPENCL_HEADERS', line: 'OPENCL_HEADERS = "/usr/include"'}
+      - {regexp: '^LIBOPENCL', line: 'LIBOPENCL = "/usr/local/cuda-8.0/targets/x86_64-linux/lib"'}
+
+    - name: make silentarmy
+      command: make chdir=~/silentarmy
+
+    - name: make test silentarmy
+      command: make test chdir=~/silentarmy
