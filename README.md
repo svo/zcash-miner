@@ -2,10 +2,13 @@
 
 The purpose of this project is to provide mechanisms for developing, testing and deploying Zcash miners.
 
-NOTES
-- this project uses git submodules so you will want to clone recursively to have all expected behaviours.
+__Donations:__ if you find this project helpful I suggest donating to the creator of _silentarmy_ via __Zcash__ address `t1cVviFvgJinQ4w3C2m2CfRxgP5DnHYaoFC`. Donations to myself also appreciated at __Zcash__ address: `t1bv8jEyXEJ29juWjezwRA1zL6fPgBi5aE3`.
 
-`git clone --recursive git@github.com:svo/zcash-miner.git`
+__NOTES:__ this project uses git submodules so you will want to clone recursively to have all expected behaviours.
+
+```
+git clone --recursive git@github.com:svo/zcash-miner.git
+```
 
 ## Setup
 
@@ -33,7 +36,7 @@ cd /vagrant
 
 Jenkins builds on commits and is available at: http://vagrant-zcash-miner-ci.local:8080/
 
-## Build Instance
+## Build EC2 Instance
 
 ```
 vagrant ssh
@@ -42,13 +45,24 @@ cd /vagrant/terraform
 terraform apply
 ```
 
-## Provision Instance
+## Provisioning
+
+### Provision Instance
 
 ```
 vagrant ssh
 cd /vagrant
 ./provision.sh <path-to-private-key> <ip-for-instance>
 ```
+
+### Provision Instance/s By IP/DNS
+
+Create an `ansible_hosts` file with the IP/DNS for the Virtual Machine/s then:
+
+```
+ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook --private-key <path-to-private-key> -u <username> -i ansible_hosts ansible/playbook.yml
+```
+
 
 ## Running Miner
 
