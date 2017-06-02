@@ -2,7 +2,7 @@
 
 The purpose of this project is to provide mechanisms for developing, testing and deploying Zcash miners.
 
-__Donations:__ if you find this project helpful I suggest donating to the creator of _silentarmy_ via __Zcash__ address `t1cVviFvgJinQ4w3C2m2CfRxgP5DnHYaoFC`. Donations to myself also appreciated at __Zcash__ address: `t1bv8jEyXEJ29juWjezwRA1zL6fPgBi5aE3`.
+__Donations:__ if you find this project helpful I suggest donating to the creator of [silentarmy](https://github.com/mbevand/silentarmy) via __Zcash__ address `t1cVviFvgJinQ4w3C2m2CfRxgP5DnHYaoFC`. Donations to myself also appreciated at __Zcash__ address: `t1bv8jEyXEJ29juWjezwRA1zL6fPgBi5aE3`.
 
 __NOTES:__ this project uses git submodules so you will want to clone recursively to have all expected behaviours.
 
